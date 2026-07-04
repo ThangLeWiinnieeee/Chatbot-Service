@@ -1,0 +1,20 @@
+services:
+  chatbot:
+    build: .
+    container_name: wtc-chatbot
+    env_file:
+      - .env
+    ports:
+      - "${PORT:-8001}:8001"
+    environment:
+      # Trong mạng docker, BE thường ở host khác — override tại đây nếu cần.
+      # BACKEND_BASE_URL: http://host.docker.internal:5002/api
+      HOST: 0.0.0.0
+      PORT: 8001
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,sys; sys.exit(0) if urllib.request.urlopen('http://localhost:8001/health').status==200 else sys.exit(1)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s

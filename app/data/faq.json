@@ -1,0 +1,209 @@
+{
+  "faqs": [
+    {
+      "id": "what_is_webtutorcenter",
+      "questions": [
+        "WebTutorCenter là gì",
+        "trang web này để làm gì",
+        "trung tâm này là gì",
+        "giới thiệu về WebTutorCenter",
+        "nền tảng này hoạt động thế nào"
+      ],
+      "keywords": ["webtutorcenter là gì", "trang web này"],
+      "answer": "WebTutorCenter là nền tảng kết nối gia sư và học viên: học viên/phụ huynh đăng tin tìm gia sư, gia sư đăng ký hồ sơ và ứng tuyển nhận lớp, hai bên trao đổi, hoàn thành lớp rồi đánh giá. Nền tảng còn hỗ trợ báo giá học phí, mã ưu đãi và chat trực tiếp với admin.",
+      "suggestions": ["Làm sao để tìm gia sư?", "Làm sao để trở thành gia sư?"]
+    },
+    {
+      "id": "register_account",
+      "questions": [
+        "làm sao để đăng ký tài khoản",
+        "tôi muốn tạo tài khoản mới",
+        "cách mở tài khoản trên web",
+        "đăng ký như thế nào",
+        "tạo tài khoản bằng google được không"
+      ],
+      "keywords": ["đăng ký tài khoản", "tạo tài khoản"],
+      "answer": "Bạn nhấn 'Đăng ký' ở góc trên bên phải, nhập email và thông tin cơ bản, rồi nhập mã OTP gửi về email để kích hoạt. Bạn cũng có thể đăng nhập nhanh bằng tài khoản Google. Sau khi đăng nhập lần đầu, hãy hoàn thiện hồ sơ (số điện thoại, ngày sinh) để dùng đầy đủ tính năng.",
+      "suggestions": ["Tôi không nhận được mã OTP", "Làm sao để trở thành gia sư?"]
+    },
+    {
+      "id": "otp_not_received",
+      "questions": [
+        "tôi không nhận được mã otp",
+        "mã xác nhận không về email",
+        "otp bị hết hạn phải làm sao",
+        "không thấy email otp",
+        "gửi lại mã otp"
+      ],
+      "keywords": ["không nhận được otp", "mã otp"],
+      "answer": "Mã OTP được gửi qua email khi đăng ký hoặc đặt lại mật khẩu. Nếu chưa nhận được, bạn kiểm tra hộp thư Spam/Quảng cáo, đợi một chút rồi bấm 'Gửi lại OTP'. Mã có thời hạn ngắn nên hãy nhập sớm; nếu hết hạn, hãy yêu cầu mã mới.",
+      "suggestions": ["Tôi quên mật khẩu", "Liên hệ hỗ trợ"]
+    },
+    {
+      "id": "forgot_password",
+      "questions": [
+        "tôi quên mật khẩu",
+        "làm sao lấy lại mật khẩu",
+        "đặt lại mật khẩu bằng cách nào",
+        "reset mật khẩu",
+        "không đăng nhập được vì quên mật khẩu"
+      ],
+      "keywords": ["quên mật khẩu", "lấy lại mật khẩu"],
+      "answer": "Tại trang đăng nhập, bạn bấm 'Quên mật khẩu', nhập email để nhận mã OTP, xác thực OTP rồi đặt mật khẩu mới. Quy trình gồm 3 bước. Nếu vẫn gặp khó khăn, hãy chat với admin để được hỗ trợ.",
+      "suggestions": ["Tôi không nhận được mã OTP", "Liên hệ hỗ trợ"]
+    },
+    {
+      "id": "become_tutor",
+      "questions": [
+        "làm sao để trở thành gia sư",
+        "tôi muốn đăng ký làm gia sư",
+        "điều kiện để làm gia sư là gì",
+        "đăng ký dạy học ở đây thế nào",
+        "muốn nhận dạy kèm thì làm sao"
+      ],
+      "keywords": ["trở thành gia sư", "đăng ký làm gia sư"],
+      "answer": "Sau khi đăng nhập, bạn vào 'Đăng ký làm gia sư', khai báo hồ sơ (môn dạy, khu vực, học vấn, kinh nghiệm...) và tải lên giấy tờ xác minh gồm CCCD cùng bằng cấp hoặc thẻ sinh viên. Admin sẽ duyệt hồ sơ; khi được duyệt, tài khoản của bạn được nâng lên vai trò gia sư và có thể nhận lớp.",
+      "suggestions": ["Gia sư cần chuẩn bị giấy tờ gì?", "Gia sư nhận lớp như thế nào?"]
+    },
+    {
+      "id": "tutor_documents",
+      "questions": [
+        "gia sư cần giấy tờ gì",
+        "hồ sơ gia sư cần chuẩn bị những gì",
+        "phải upload giấy tờ gì để làm gia sư",
+        "cần bằng cấp gì để dạy",
+        "chưa có bằng thì làm gia sư được không"
+      ],
+      "keywords": ["giấy tờ gia sư", "bằng cấp", "thẻ sinh viên"],
+      "answer": "Gia sư cần tải lên giấy tờ để xác minh: CCCD, kèm bằng cấp hoặc thẻ sinh viên (nếu đang là sinh viên). Chỉ khi có đủ giấy tờ hợp lệ, gia sư mới được nhận lớp hoặc được mời dạy. Bạn tải giấy tờ trong trang hồ sơ gia sư.",
+      "suggestions": ["Làm sao để trở thành gia sư?", "Gia sư nhận lớp như thế nào?"]
+    },
+    {
+      "id": "find_tutor",
+      "questions": [
+        "làm sao để tìm gia sư",
+        "tôi muốn thuê gia sư dạy kèm",
+        "tìm gia sư môn toán ở đâu",
+        "cần gia sư cho con thì làm thế nào",
+        "cách chọn gia sư phù hợp"
+      ],
+      "keywords": ["tìm gia sư", "thuê gia sư"],
+      "answer": "Có hai cách: (1) Vào trang 'Tìm gia sư', lọc theo môn, khu vực, giới tính, học vấn... rồi xem hồ sơ và gửi lời mời đích danh cho gia sư phù hợp; hoặc (2) Đăng tin tìm gia sư để các gia sư chủ động ứng tuyển, sau đó bạn chọn người ưng ý.",
+      "suggestions": ["Làm sao để đăng tin tìm gia sư?", "Học phí được tính thế nào?"]
+    },
+    {
+      "id": "post_class",
+      "questions": [
+        "làm sao để đăng tin tìm gia sư",
+        "tôi muốn đăng lớp tìm gia sư",
+        "cách tạo bài đăng tìm gia sư",
+        "đăng yêu cầu tìm gia sư ở đâu",
+        "post tin tìm lớp thế nào"
+      ],
+      "keywords": ["đăng tin tìm gia sư", "đăng lớp"],
+      "answer": "Bạn vào mục 'Đăng tin tìm gia sư' (trang /find-tutor), điền môn học, lịch học theo tuần, khu vực và mức phí mong muốn. Hệ thống sẽ báo giá học phí; sau khi đăng, gia sư có thể ứng tuyển vào lớp, hoặc bạn mời gia sư đích danh. Bài đăng có vòng đời: đang mở → đã ghép → hết hạn/hoàn thành.",
+      "suggestions": ["Học phí được tính thế nào?", "Làm sao để chọn gia sư?"]
+    },
+    {
+      "id": "tutor_apply_class",
+      "questions": [
+        "gia sư nhận lớp như thế nào",
+        "làm sao để ứng tuyển lớp",
+        "quy trình nhận lớp của gia sư",
+        "gia sư tìm lớp ở đâu",
+        "cách nhận lớp dạy"
+      ],
+      "keywords": ["gia sư nhận lớp", "ứng tuyển lớp"],
+      "answer": "Gia sư xem feed các lớp theo môn mình dạy, chọn lớp phù hợp và bấm 'Nhận lớp' để ứng tuyển (cần hồ sơ đã duyệt, đủ giấy tờ và đúng môn). Người đăng sẽ chọn gia sư trong số ứng viên, sau đó admin duyệt là gia sư chính thức nhận lớp và lớp chuyển sang 'đã ghép'.",
+      "suggestions": ["Gia sư cần giấy tờ gì?", "Làm sao để hủy đơn nhận lớp?"]
+    },
+    {
+      "id": "invite_tutor",
+      "questions": [
+        "làm sao để mời gia sư dạy",
+        "tôi muốn mời gia sư đích danh",
+        "gửi lời mời cho gia sư thế nào",
+        "mời trực tiếp một gia sư cụ thể"
+      ],
+      "keywords": ["mời gia sư", "lời mời dạy lớp"],
+      "answer": "Khi xem hồ sơ một gia sư, bạn có thể gửi 'lời mời dạy lớp' đích danh cho gia sư đó. Gia sư sẽ nhận lời mời và chọn Nhận hoặc Từ chối; nếu nhận, đơn sẽ đi vào luồng duyệt như khi ứng tuyển thông thường.",
+      "suggestions": ["Làm sao để đăng tin tìm gia sư?", "Làm sao để chọn gia sư?"]
+    },
+    {
+      "id": "pricing",
+      "questions": [
+        "học phí như thế nào",
+        "giá thuê gia sư bao nhiêu",
+        "chi phí học một tháng là bao nhiêu",
+        "học phí được tính thế nào",
+        "báo giá lớp ra sao"
+      ],
+      "keywords": ["học phí", "báo giá", "giá gia sư"],
+      "answer": "Học phí được hệ thống báo giá tự động khi bạn tạo yêu cầu lớp, dựa trên cấp lớp/môn và số buổi mỗi tháng; bạn có thể áp mã ưu đãi để giảm giá. Mức phí cuối cùng hiển thị ngay trong bước 'Báo giá' ở trang đăng tin. Chi tiết thanh toán từng lớp có thể trao đổi thêm với gia sư/admin.",
+      "suggestions": ["Mã ưu đãi dùng thế nào?", "Thanh toán bằng cách nào?"]
+    },
+    {
+      "id": "voucher",
+      "questions": [
+        "mã ưu đãi dùng thế nào",
+        "voucher của tôi ở đâu",
+        "làm sao để dùng mã giảm giá",
+        "có khuyến mãi gì không",
+        "áp mã giảm giá vào lớp"
+      ],
+      "keywords": ["mã ưu đãi", "voucher", "mã giảm giá"],
+      "answer": "Mã ưu đãi được nhập/áp ở bước báo giá khi tạo lớp để giảm học phí (giảm theo phần trăm hoặc số tiền cố định, có thể có giới hạn). Voucher cá nhân của bạn nằm trong 'Kho voucher' (trang /my-vouchers); một số voucher được tặng tự động sau khi hoàn thành lớp.",
+      "suggestions": ["Học phí được tính thế nào?", "Làm sao để hoàn thành lớp?"]
+    },
+    {
+      "id": "complete_class",
+      "questions": [
+        "làm sao để hoàn thành lớp",
+        "xác nhận kết thúc lớp thế nào",
+        "khi nào lớp được tính là hoàn thành",
+        "hoàn tất lớp học để được đánh giá"
+      ],
+      "keywords": ["hoàn thành lớp", "xác nhận hoàn thành"],
+      "answer": "Khi lớp kết thúc, cả người đăng và gia sư cùng bấm 'Xác nhận hoàn thành'. Khi đủ hai xác nhận, lớp chuyển sang trạng thái 'hoàn thành': hệ thống tặng voucher và mở quyền cho người đăng đánh giá gia sư.",
+      "suggestions": ["Làm sao để đánh giá gia sư?", "Voucher của tôi ở đâu?"]
+    },
+    {
+      "id": "review",
+      "questions": [
+        "làm sao để đánh giá gia sư",
+        "tôi muốn viết nhận xét cho gia sư",
+        "đánh giá lớp học thế nào",
+        "cho sao gia sư ở đâu",
+        "gia sư có trả lời đánh giá không"
+      ],
+      "keywords": ["đánh giá gia sư", "nhận xét gia sư", "review"],
+      "answer": "Sau khi lớp hoàn thành, người đăng đánh giá gia sư (mỗi lớp 1 lần) bằng số sao và nhận xét; đánh giá hiển thị công khai trên hồ sơ gia sư và cập nhật điểm trung bình của gia sư. Gia sư có thể xem đánh giá của mình ở trang '/my-reviews' và trả lời mỗi đánh giá đúng 1 lần.",
+      "suggestions": ["Làm sao để hoàn thành lớp?", "Xem hồ sơ gia sư"]
+    },
+    {
+      "id": "cancel_class",
+      "questions": [
+        "làm sao để hủy đơn nhận lớp",
+        "gia sư muốn hủy lớp thì làm sao",
+        "xin hủy lớp đã nhận",
+        "hủy lớp có được không"
+      ],
+      "keywords": ["hủy lớp", "hủy đơn nhận lớp"],
+      "answer": "Gia sư có thể gửi yêu cầu hủy đơn nhận lớp trong mục 'Lớp của tôi'; yêu cầu sẽ ở trạng thái 'chờ hủy' cho đến khi admin xem xét và duyệt hoặc từ chối. Vì việc hủy ảnh hưởng đến người đăng, hãy cân nhắc và nêu lý do rõ ràng.",
+      "suggestions": ["Gia sư nhận lớp như thế nào?", "Liên hệ hỗ trợ"]
+    },
+    {
+      "id": "contact_support",
+      "questions": [
+        "làm sao để liên hệ hỗ trợ",
+        "tôi muốn gặp admin",
+        "chat với nhân viên tư vấn",
+        "cần hỗ trợ trực tiếp",
+        "số điện thoại hỗ trợ"
+      ],
+      "keywords": ["liên hệ hỗ trợ", "gặp admin", "chat với admin"],
+      "answer": "Bạn có thể chat trực tiếp với admin qua khung chat (biểu tượng tin nhắn ở góc màn hình) — đây là kênh hỗ trợ nhanh nhất, admin sẽ phản hồi sớm. Bạn cũng có thể xem thông tin liên hệ ở chân trang (footer).",
+      "suggestions": ["Học phí như thế nào?", "Làm sao để tìm gia sư?"]
+    }
+  ]
+}

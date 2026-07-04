@@ -1,0 +1,221 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "type": "smalltalk",
+      "patterns": ["xin chào", "chào", "chào bạn", "chào shop", "chào ad", "hello", "hi", "alo", "hế lô"],
+      "responses": [
+        "Xin chào! Mình là trợ lý ảo của WebTutorCenter. Mình có thể giúp gì cho bạn hôm nay?",
+        "Chào bạn! Bạn cần tìm gia sư, đăng ký, hay hỏi về học phí? Mình hỗ trợ ngay nhé."
+      ],
+      "suggestions": ["Làm sao để tìm gia sư?", "Làm sao để đăng ký?", "Học phí như thế nào?"]
+    },
+    {
+      "tag": "goodbye",
+      "type": "smalltalk",
+      "patterns": ["tạm biệt", "bye", "byebye", "hẹn gặp lại", "chào tạm biệt", "gặp lại sau"],
+      "responses": [
+        "Tạm biệt bạn nhé! Chúc bạn tìm được gia sư/lớp phù hợp. Cần gì cứ quay lại hỏi mình.",
+        "Hẹn gặp lại! Chúc bạn một ngày tốt lành."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "type": "smalltalk",
+      "patterns": ["cảm ơn", "cám ơn", "cảm ơn bạn", "thanks", "thank you", "thank", "tks", "cảm ơn nhiều"],
+      "responses": [
+        "Không có gì đâu! Bạn cần hỗ trợ thêm gì nữa không?",
+        "Rất vui được giúp bạn. Cần gì thêm cứ nhắn mình nhé!"
+      ]
+    },
+    {
+      "tag": "bot_identity",
+      "type": "smalltalk",
+      "patterns": ["bạn là ai", "bạn là gì", "đây là ai", "bot gì", "trợ lý gì", "ai đang trả lời", "bạn tên gì"],
+      "responses": [
+        "Mình là trợ lý ảo của WebTutorCenter — nền tảng kết nối gia sư và học viên. Mình giúp bạn tìm gia sư, đăng tin tìm lớp, giải đáp về học phí, đăng ký, đánh giá..."
+      ],
+      "suggestions": ["Làm sao để tìm gia sư?", "Làm sao để trở thành gia sư?"]
+    },
+    {
+      "tag": "register",
+      "type": "intent",
+      "patterns": ["đăng ký tài khoản", "tạo tài khoản", "cách đăng ký", "mở tài khoản", "sign up", "làm sao đăng ký", "đăng ký như thế nào"],
+      "responses": [
+        "Để đăng ký, bạn nhấn nút 'Đăng ký' ở góc trên bên phải, nhập email và thông tin cơ bản, sau đó nhập mã OTP gửi về email để kích hoạt tài khoản. Bạn cũng có thể đăng nhập nhanh bằng Google."
+      ],
+      "suggestions": ["Tôi không nhận được mã OTP", "Làm sao để trở thành gia sư?"]
+    },
+    {
+      "tag": "verify_otp",
+      "type": "intent",
+      "patterns": ["mã otp", "xác thực otp", "không nhận được otp", "mã xác nhận email", "otp hết hạn", "nhập mã xác nhận"],
+      "responses": [
+        "Mã OTP được gửi về email khi bạn đăng ký hoặc đặt lại mật khẩu. Nếu không thấy, bạn kiểm tra hộp thư spam, hoặc bấm 'Gửi lại OTP'. Mã có thời hạn nên hãy nhập sớm nhé."
+      ],
+      "suggestions": ["Tôi quên mật khẩu", "Đăng ký tài khoản"]
+    },
+    {
+      "tag": "forgot_password",
+      "type": "intent",
+      "patterns": ["quên mật khẩu", "lấy lại mật khẩu", "đặt lại mật khẩu", "reset mật khẩu", "đổi mật khẩu", "khôi phục mật khẩu"],
+      "responses": [
+        "Ở trang đăng nhập, bạn bấm 'Quên mật khẩu', nhập email để nhận mã OTP, xác thực OTP rồi đặt mật khẩu mới. Quy trình gồm 3 bước và khá nhanh."
+      ],
+      "suggestions": ["Tôi không nhận được mã OTP", "Liên hệ hỗ trợ"]
+    },
+    {
+      "tag": "become_tutor",
+      "type": "intent",
+      "patterns": ["trở thành gia sư", "đăng ký làm gia sư", "muốn làm gia sư", "đăng ký gia sư", "ứng tuyển gia sư", "tôi muốn dạy học", "đăng ký dạy kèm"],
+      "responses": [
+        "Sau khi đăng nhập, bạn vào 'Đăng ký làm gia sư', điền hồ sơ (môn dạy, khu vực, kinh nghiệm...) và tải lên giấy tờ như CCCD, bằng cấp hoặc thẻ sinh viên. Admin duyệt xong, bạn sẽ trở thành gia sư và có thể nhận lớp."
+      ],
+      "suggestions": ["Gia sư cần giấy tờ gì?", "Gia sư nhận lớp như thế nào?"]
+    },
+    {
+      "tag": "tutor_documents",
+      "type": "intent",
+      "patterns": ["giấy tờ gia sư", "gia sư cần giấy tờ gì", "upload bằng cấp", "cccd", "thẻ sinh viên", "hồ sơ gia sư cần gì", "tải giấy tờ"],
+      "responses": [
+        "Gia sư cần tải lên giấy tờ xác minh: CCCD, cùng bằng cấp hoặc thẻ sinh viên. Phải có đủ giấy tờ hợp lệ thì mới được nhận lớp hoặc được mời dạy. Bạn tải giấy tờ ngay trong trang hồ sơ gia sư."
+      ],
+      "suggestions": ["Trở thành gia sư", "Gia sư nhận lớp như thế nào?"]
+    },
+    {
+      "tag": "find_tutor",
+      "type": "intent",
+      "patterns": ["tìm gia sư", "thuê gia sư", "cần gia sư", "kiếm gia sư", "tìm giáo viên", "tìm người dạy kèm", "muốn tìm gia sư"],
+      "responses": [
+        "Bạn vào trang 'Tìm gia sư' để xem danh sách, lọc theo môn, khu vực, giới tính, học vấn... Xem hồ sơ gia sư phù hợp rồi có thể mời đích danh, hoặc đăng tin để gia sư chủ động ứng tuyển."
+      ],
+      "suggestions": ["Làm sao để đăng tin tìm gia sư?", "Học phí như thế nào?"]
+    },
+    {
+      "tag": "post_class",
+      "type": "intent",
+      "patterns": ["đăng tin tìm gia sư", "tạo bài đăng tìm gia sư", "đăng tin tìm lớp", "đăng yêu cầu tìm gia sư", "đăng bài tìm gia sư"],
+      "responses": [
+        "Vào mục 'Đăng tin tìm gia sư' (trang /find-tutor), bạn điền môn, lịch học, khu vực và mức phí mong muốn. Hệ thống sẽ báo giá; sau khi đăng, gia sư có thể ứng tuyển hoặc bạn mời gia sư đích danh."
+      ],
+      "suggestions": ["Học phí được tính thế nào?", "Làm sao để chọn gia sư?"]
+    },
+    {
+      "tag": "apply_class",
+      "type": "intent",
+      "patterns": ["gia sư nhận lớp", "ứng tuyển lớp", "nhận lớp dạy", "gia sư ứng tuyển", "cách nhận lớp", "làm sao nhận lớp"],
+      "responses": [
+        "Gia sư xem feed lớp theo môn mình dạy, chọn lớp phù hợp và bấm 'Nhận lớp' để ứng tuyển. Người đăng chọn gia sư, sau đó admin duyệt là bạn chính thức nhận lớp. Lưu ý cần đủ giấy tờ hồ sơ và đúng môn."
+      ],
+      "suggestions": ["Gia sư cần giấy tờ gì?", "Làm sao để hủy lớp đã nhận?"]
+    },
+    {
+      "tag": "invite_tutor",
+      "type": "intent",
+      "patterns": ["mời gia sư", "mời gia sư dạy", "mời đích danh", "lời mời dạy lớp", "gửi lời mời gia sư"],
+      "responses": [
+        "Khi xem hồ sơ một gia sư, bạn có thể gửi 'lời mời dạy lớp' đích danh. Gia sư sẽ nhận được lời mời và chọn Nhận hoặc Từ chối; nếu nhận, đơn sẽ vào luồng duyệt như bình thường."
+      ],
+      "suggestions": ["Làm sao để đăng tin tìm gia sư?", "Làm sao để chọn gia sư?"]
+    },
+    {
+      "tag": "select_tutor",
+      "type": "intent",
+      "patterns": ["chọn gia sư", "duyệt gia sư nhận lớp", "xem ứng viên", "chọn ứng viên", "chọn gia sư dạy"],
+      "responses": [
+        "Ở bài đăng của bạn ('Bài đăng của tôi'), mở danh sách ứng viên đã nhận lớp, xem hồ sơ và bấm 'Chọn' gia sư phù hợp. Sau khi admin duyệt, lớp sẽ được ghép với gia sư đó."
+      ],
+      "suggestions": ["Học phí như thế nào?", "Làm sao để đánh giá gia sư?"]
+    },
+    {
+      "tag": "cancel_class",
+      "type": "intent",
+      "patterns": ["hủy lớp", "hủy đơn nhận lớp", "xin hủy lớp", "gia sư hủy lớp", "hủy nhận lớp"],
+      "responses": [
+        "Gia sư có thể gửi yêu cầu hủy đơn nhận lớp; admin sẽ xem xét và duyệt/từ chối yêu cầu hủy. Bạn thao tác trong mục 'Lớp của tôi'."
+      ],
+      "suggestions": ["Gia sư nhận lớp như thế nào?", "Liên hệ hỗ trợ"]
+    },
+    {
+      "tag": "complete_class",
+      "type": "intent",
+      "patterns": ["hoàn thành lớp", "xác nhận hoàn thành", "kết thúc lớp", "lớp hoàn thành", "hoàn tất lớp học"],
+      "responses": [
+        "Khi lớp kết thúc, cả người đăng và gia sư cùng bấm 'Xác nhận hoàn thành'. Đủ hai xác nhận, lớp chuyển sang trạng thái 'hoàn thành', bạn được tặng voucher và có thể đánh giá gia sư."
+      ],
+      "suggestions": ["Làm sao để đánh giá gia sư?", "Voucher của tôi ở đâu?"]
+    },
+    {
+      "tag": "pricing",
+      "type": "intent",
+      "patterns": ["học phí", "báo giá", "giá bao nhiêu", "chi phí", "phí học", "giá lớp", "học phí thế nào", "giá cả"],
+      "responses": [
+        "Học phí được hệ thống báo giá tự động khi bạn tạo yêu cầu lớp, dựa trên cấp lớp/môn và số buổi mỗi tháng; bạn có thể áp mã ưu đãi để được giảm. Hãy dùng chức năng 'Báo giá' ngay ở trang đăng tin tìm gia sư nhé."
+      ],
+      "suggestions": ["Mã ưu đãi dùng thế nào?", "Thanh toán bằng cách nào?"]
+    },
+    {
+      "tag": "payment",
+      "type": "intent",
+      "patterns": ["thanh toán", "trả tiền", "chuyển khoản", "thanh toán học phí", "đóng học phí", "hình thức thanh toán"],
+      "responses": [
+        "Học phí được thỏa thuận theo báo giá của lớp. Về hình thức thanh toán cụ thể, bạn vui lòng chat với admin để được hướng dẫn chi tiết theo từng lớp."
+      ],
+      "suggestions": ["Học phí được tính thế nào?", "Liên hệ hỗ trợ"]
+    },
+    {
+      "tag": "voucher",
+      "type": "intent",
+      "patterns": ["mã ưu đãi", "voucher", "mã giảm giá", "khuyến mãi", "mã khuyến mãi", "coupon", "kho voucher"],
+      "responses": [
+        "Mã ưu đãi được áp khi báo giá/tạo lớp để giảm học phí. Voucher cá nhân của bạn nằm ở 'Kho voucher' (trang /my-vouchers); một số voucher được tặng sau khi hoàn thành lớp."
+      ],
+      "suggestions": ["Học phí như thế nào?", "Làm sao để đăng tin tìm gia sư?"]
+    },
+    {
+      "tag": "review",
+      "type": "intent",
+      "patterns": ["đánh giá gia sư", "viết đánh giá", "review gia sư", "nhận xét gia sư", "cho sao gia sư", "đánh giá lớp"],
+      "responses": [
+        "Sau khi lớp hoàn thành, người đăng có thể đánh giá gia sư (1 lần cho mỗi lớp) qua nút 'Đánh giá'. Đánh giá gồm số sao và nhận xét, hiển thị công khai trên hồ sơ gia sư."
+      ],
+      "suggestions": ["Gia sư trả lời đánh giá thế nào?", "Làm sao để hoàn thành lớp?"]
+    },
+    {
+      "tag": "tutor_reply_review",
+      "type": "intent",
+      "patterns": ["gia sư trả lời đánh giá", "phản hồi đánh giá", "trả lời nhận xét", "gia sư phản hồi review"],
+      "responses": [
+        "Gia sư xem các đánh giá của mình ở trang '/my-reviews' và có thể trả lời mỗi đánh giá đúng 1 lần. Phần trả lời sẽ hiển thị công khai kèm đánh giá đó."
+      ],
+      "suggestions": ["Làm sao để đánh giá gia sư?", "Xem hồ sơ gia sư"]
+    },
+    {
+      "tag": "update_profile",
+      "type": "intent",
+      "patterns": ["cập nhật hồ sơ", "sửa thông tin", "đổi thông tin cá nhân", "đổi avatar", "chỉnh sửa hồ sơ", "gia sư đổi hồ sơ"],
+      "responses": [
+        "Bạn vào trang 'Hồ sơ' để cập nhật thông tin cá nhân và ảnh đại diện. Riêng gia sư khi đổi thông tin hồ sơ sẽ tạo yêu cầu chờ admin duyệt trước khi áp dụng."
+      ],
+      "suggestions": ["Trở thành gia sư", "Liên hệ hỗ trợ"]
+    },
+    {
+      "tag": "notifications",
+      "type": "intent",
+      "patterns": ["notification", "chuông thông báo", "kiểm tra thông báo", "biểu tượng chuông thông báo"],
+      "responses": [
+        "Các thông báo (được duyệt hồ sơ, có người nhận lớp, đánh giá mới...) hiển thị ở biểu tượng chuông và trang 'Thông báo'. Thông báo đã đọc sẽ tự xóa sau một thời gian."
+      ],
+      "suggestions": ["Làm sao để trở thành gia sư?", "Liên hệ hỗ trợ"]
+    },
+    {
+      "tag": "contact_admin",
+      "type": "intent",
+      "patterns": ["gặp admin", "liên hệ admin", "hỗ trợ", "chat với admin", "tư vấn", "cskh", "liên hệ", "hỗ trợ trực tiếp", "gặp nhân viên"],
+      "responses": [
+        "Bạn có thể chat trực tiếp với admin qua khung chat (biểu tượng tin nhắn ở góc màn hình) để được hỗ trợ nhanh nhất. Admin sẽ phản hồi trong thời gian sớm nhất."
+      ],
+      "suggestions": ["Học phí như thế nào?", "Làm sao để tìm gia sư?"]
+    }
+  ]
+}
