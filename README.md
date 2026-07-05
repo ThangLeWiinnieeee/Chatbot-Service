@@ -8,7 +8,7 @@ Rule chạy trước để trả lời tức thì với 0 token; chỉ gọi AI 
 ![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.115%2B-009688?logo=fastapi&logoColor=white)
 ![Groq](https://img.shields.io/badge/AI-Groq%20LLM-F55036?logo=groq&logoColor=white)
-![Tests](https://img.shields.io/badge/tests-28%20passed-brightgreen?logo=pytest&logoColor=white)
+![Tests](https://img.shields.io/badge/tests-38%20passed-brightgreen?logo=pytest&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
 </div>
@@ -52,11 +52,12 @@ luật (chào hỏi, hướng dẫn đăng ký, học phí…). Chatbot chạy c
 - **Rule 0 token** — greeting, phân loại ý định, FAQ; trả lời tức thì không gọi mạng.
 - **AI fallback (Groq)** — model `llama-3.3-70b-versatile`, kèm **RAG-lite** (nhét FAQ liên quan vào prompt).
 - **Gọi ngược Backend** — resolver `data` lấy số liệu sống (danh sách môn, số lượng gia sư) qua API của BE.
+- **Dữ liệu cá nhân (JWT)** — resolver `mine` forward Bearer token của người dùng xuống BE để trả lời *"bài đăng của tôi"*, *"hồ sơ của tôi"*, *"đơn ứng tuyển"*, *"lời mời dạy"*; không bao giờ để AI bịa dữ liệu riêng tư.
 - **Tối ưu tiếng Việt** — chuẩn hoá bỏ dấu + *distinctive-gate* chống khớp nhầm do token phổ biến.
 - **Cache TTL** — câu hỏi lặp không gọi lại AI.
 - **Flywheel** — log câu rớt xuống AI để dần biến thành rule mới (0 token).
 - **Provider-agnostic** — đổi Groq ↔ Gemini ↔ self-host chỉ bằng cài đặt lại 1 interface.
-- **Có test** — 28 test (resolver / engine / API) chạy không cần mạng.
+- **Có test** — 38 test (resolver / engine / API) chạy không cần mạng.
 
 ## Cách hoạt động
 
@@ -68,7 +69,7 @@ luật (chào hỏi, hướng dẫn đăng ký, học phí…). Chatbot chạy c
                          │        │ no                                   │
                          │        ▼                                      │
                          │   2. Chuỗi resolver (Chain of Responsibility) │
-                         │      greeting → data → keyword → faq          │
+                         │      greeting → mine → data → keyword → faq   │
                          │        │                                      │
                          │   confidence ≥ ngưỡng?  ──yes──►  trả lời rule│
                          │        │ no                                   │
@@ -82,6 +83,7 @@ luật (chào hỏi, hướng dẫn đăng ký, học phí…). Chatbot chạy c
 | Tầng | Khi nào dùng | Chi phí | Ví dụ câu hỏi |
 |------|--------------|---------|---------------|
 | **Rule** (greeting/intent/FAQ/data) | Câu phổ biến, có mẫu | 0 token | *"xin chào"*, *"làm sao đăng ký"*, *"có bao nhiêu gia sư môn Toán"* |
+| **Mine** (dữ liệu cá nhân) | Câu "của tôi", cần đăng nhập | 0 token | *"bài đăng của tôi"*, *"hồ sơ của tôi"*, *"đơn ứng tuyển của tôi"* |
 | **AI** (Groq LLM) | Rule không đủ tự tin | Tốn token | *"gia sư ở đây có dạy piano cho người lớn không"* |
 
 ## Công nghệ
@@ -154,7 +156,14 @@ Tất cả biến đọc từ `.env` (xem [.env.example](.env.example)).
 
 ### `POST /api/chat`
 
-**Request** — chỉ `message` là bắt buộc; `history` giúp AI hiểu ngữ cảnh nhiều lượt:
+**Headers** (tuỳ chọn):
+
+| Header | Khi nào | Ý nghĩa |
+|--------|---------|---------|
+| `X-Internal-Secret` | Nếu đặt `INTERNAL_SECRET` | Xác thực service-to-service (BE ↔ chatbot). |
+| `Authorization: Bearer <token>` | Câu hỏi cá nhân | JWT của người dùng cuối, forward xuống BE cho resolver `mine`. Thiếu ⇒ bot nhắc đăng nhập. |
+
+**Request** — chỉ `message` là bắt buộc; `history` giúp AI hiểu ngữ cảnh nhiều lượt; `user.role` (`tutor`/`user`) giúp `mine` định tuyến đúng:
 
 ```json
 {
@@ -163,7 +172,7 @@ Tất cả biến đọc từ `.env` (xem [.env.example](.env.example)).
     { "role": "user", "content": "chào bạn" },
     { "role": "assistant", "content": "Chào bạn! Mình có thể giúp gì?" }
   ],
-  "user": { "id": "u_123", "role": "student" },
+  "user": { "id": "u_123", "role": "user" },
   "sessionId": "abc-123"
 }
 ```
@@ -184,7 +193,7 @@ Tất cả biến đọc từ `.env` (xem [.env.example](.env.example)).
 | Trường | Kiểu | Mô tả |
 |--------|------|-------|
 | `answer` | string | Câu trả lời cho người dùng. |
-| `source` | string | Nguồn tạo câu trả lời: `greeting \| keyword \| faq \| data \| ai \| fallback`. |
+| `source` | string | Nguồn tạo câu trả lời: `greeting \| mine \| keyword \| faq \| data \| ai \| fallback`. |
 | `intent` | string \| null | Nhãn ý định (nếu có). |
 | `confidence` | number | Độ tin cậy 0–1. |
 | `suggestions` | string[] | Gợi ý câu hỏi tiếp theo. |
@@ -202,8 +211,11 @@ Tất cả biến đọc từ `.env` (xem [.env.example](.env.example)).
 
 ## Cơ chế bên trong
 
-- **Chain of Responsibility** — resolver chạy theo thứ tự `greeting → data → keyword → faq`; resolver đầu tiên đạt
-  `confidence ≥ RULE_CONFIDENCE_THRESHOLD` sẽ trả lời. Không resolver nào đủ tự tin ⇒ chuyển AI.
+- **Chain of Responsibility** — resolver chạy theo thứ tự `greeting → mine → data → keyword → faq`; resolver đầu tiên
+  đạt `confidence ≥ RULE_CONFIDENCE_THRESHOLD` sẽ trả lời. Không resolver nào đủ tự tin ⇒ chuyển AI.
+- **Dữ liệu cá nhân an toàn** — khi `mine` đã nhận diện câu "của tôi", nó **không** nhường xuống AI: chưa đăng nhập ⇒
+  nhắc login; BE lỗi/không đủ quyền ⇒ xin lỗi. Tránh AI bịa dữ liệu riêng tư. Kết quả luôn `cacheable=false` (theo
+  từng user) nên không rò dữ liệu giữa các user qua cache.
 - **Rule = Data** — luật nằm trong [app/data/intents.json](app/data/intents.json) và
   [app/data/faq.json](app/data/faq.json), không hard-code trong code.
 - **Chuẩn hoá tiếng Việt** — bỏ dấu để so khớp bền với lỗi gõ (*"hoc phi"* khớp *"học phí"*).
@@ -229,7 +241,7 @@ Thêm/chỉnh luật **chỉ cần sửa file JSON**, không đụng code:
 ## Kiểm thử
 
 ```bash
-pytest              # 28 test
+pytest              # 38 test
 pytest -v           # chi tiết từng test
 ```
 
@@ -237,7 +249,7 @@ Test dùng **AI giả** (không gọi mạng) nên chạy nhanh và ổn định
 
 | File | Phạm vi |
 |------|---------|
-| [tests/test_resolvers.py](tests/test_resolvers.py) | Từng resolver + normalizer |
+| [tests/test_resolvers.py](tests/test_resolvers.py) | Từng resolver (greeting/keyword/faq/data/mine) + normalizer |
 | [tests/test_engine.py](tests/test_engine.py) | Chain of Responsibility, AI fallback, cache |
 | [tests/test_api.py](tests/test_api.py) | Endpoint HTTP (FastAPI TestClient) |
 
@@ -255,17 +267,23 @@ docker run --env-file .env -p 8001:8001 wtc-chatbot
 ## Tích hợp với Backend
 
 ```
-┌──────────┐   POST /api/chat (X-Internal-Secret)   ┌─────────────┐
-│    BE     │ ─────────────────────────────────────► │   Chatbot   │
-│ (Node/    │                                        │  (FastAPI)  │
-│  Express) │ ◄───────────────────────────────────── │             │
-└──────────┘   GET /subjects, /tutors/search (data)  └─────────────┘
+┌──────────┐  POST /api/chat (X-Internal-Secret          ┌─────────────┐
+│    BE     │        + Authorization: Bearer <user JWT>)  │   Chatbot   │
+│ (Node/    │ ─────────────────────────────────────────► │  (FastAPI)  │
+│  Express) │ ◄───────────────────────────────────────── │             │
+└──────────┘  data:     GET /subjects, /tutors/search     └─────────────┘
+              mine:     GET /users/user-info, /classes/my-posts,
+                        /classes/mine, /classes/invitations  (kèm JWT)
 ```
 
 - **BE → Chatbot**: Backend proxy câu hỏi người dùng tới `POST http://<chatbot>:8001/api/chat`.
-  Nếu đặt `INTERNAL_SECRET`, gửi kèm header `X-Internal-Secret`.
-- **Chatbot → BE**: resolver `data` gọi ngược `BACKEND_BASE_URL` cho câu cần dữ liệu thật (danh sách môn, số lượng
-  gia sư…). Không nối thẳng MongoDB ⇒ chatbot giữ tính generic. BE tắt ⇒ nuốt lỗi, rơi xuống AI (không làm sập chat).
+  Nếu đặt `INTERNAL_SECRET`, gửi kèm header `X-Internal-Secret`. Với câu hỏi cá nhân, **forward luôn header
+  `Authorization: Bearer <token>`** của người dùng — chatbot chỉ chuyển tiếp token này xuống BE, không tự giải mã.
+- **Chatbot → BE**:
+  - resolver `data` gọi ngược `BACKEND_BASE_URL` cho câu cần dữ liệu **chung** (danh sách môn, số lượng gia sư…).
+  - resolver `mine` gọi các endpoint **cá nhân** (kèm JWT của user) để trả lời câu "của tôi".
+  Không nối thẳng MongoDB ⇒ chatbot giữ tính generic. BE tắt ⇒ nuốt lỗi (data → rơi xuống AI; mine → xin lỗi, không
+  để AI bịa dữ liệu riêng tư), không làm sập chat.
 
 ## Bảo mật
 
