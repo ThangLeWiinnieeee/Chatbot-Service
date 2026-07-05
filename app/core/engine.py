@@ -98,6 +98,9 @@ class ChatEngine:
             confidence=0.5,
             source=Source.AI.value,
             intent=candidate.intent if candidate else None,
+            # Câu có history phụ thuộc ngữ cảnh hội thoại → không cache theo query-only,
+            # tránh trả đáp án của hội thoại khác cho follow-up ("còn môn Lý thì sao?").
+            cacheable=not ctx.history,
             meta={"rag_contexts": len(contexts)},
         )
 

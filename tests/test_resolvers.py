@@ -8,11 +8,12 @@ from app.core.resolvers.data import DataResolver
 from app.core.resolvers.faq import FaqResolver
 from app.core.resolvers.greeting import GreetingResolver
 from app.core.resolvers.keyword import KeywordResolver
-from app.core.types import ChatContext
+from app.core.types import ChatContext, Message
 
 from .conftest import FakeBackend
 
 CTX = ChatContext()
+_GIBBERISH = "asdf qwer zxcv"  # không khớp rule nào → rơi xuống AI
 
 
 # --- normalizer ---
@@ -115,3 +116,18 @@ async def test_data_ignores_non_data_tutor_question():
     resolver = DataResolver(backend=FakeBackend(total=7))
     # Không có từ đếm và không nêu môn → không phải câu số liệu.
     assert await resolver.resolve("gia sư có kinh nghiệm không", CTX) is None
+
+
+# --- engine: cache AI theo ngữ cảnh ---
+
+async def test_engine_caches_ai_answer_without_history(engine, fake_provider):
+    await engine.answer(_GIBBERISH, ChatContext())
+    await engine.answer(_GIBBERISH, ChatContext())
+    assert len(fake_provider.calls) == 1  # lần 2 ăn cache, không gọi lại AI
+
+
+async def test_engine_skips_cache_for_ai_answer_with_history(engine, fake_provider):
+    ctx = ChatContext(history=[Message(role="user", content="chào bạn")])
+    await engine.answer(_GIBBERISH, ctx)
+    await engine.answer(_GIBBERISH, ctx)
+    assert len(fake_provider.calls) == 2  # có history → không cache, gọi AI lại
