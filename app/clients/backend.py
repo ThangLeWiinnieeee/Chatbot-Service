@@ -34,6 +34,50 @@ class BackendClient:
             return payload.get("data")
         return None
 
+    async def _get_data_auth(self, path: str, token: str, params: dict | None = None):
+        """Như `_get_data` nhưng kèm Bearer token của người dùng cuối.
+
+        Dùng cho endpoint cá nhân (BE yêu cầu authMiddleware). 401/403/lỗi mạng
+        → None; resolver tự quyết định (báo đăng nhập / xin lỗi), KHÔNG rơi xuống
+        AI để tránh bịa dữ liệu riêng tư của user.
+        """
+        try:
+            resp = await self._client.get(
+                path, params=params, headers={"Authorization": f"Bearer {token}"}
+            )
+            resp.raise_for_status()
+            payload = resp.json()
+        except Exception as exc:  # noqa: BLE001 - chủ đích nuốt mọi lỗi
+            logger.warning("Backend GET %s (auth) failed: %s", path, exc)
+            return None
+        if isinstance(payload, dict):
+            return payload.get("data")
+        return None
+
+    async def get_my_profile(self, token: str) -> dict | None:
+        """GET /users/user-info → hồ sơ người dùng đang đăng nhập."""
+        data = await self._get_data_auth("users/user-info", token)
+        if isinstance(data, dict):
+            user = data.get("user")
+            if isinstance(user, dict):
+                return user
+        return None
+
+    async def get_my_posts(self, token: str) -> dict | None:
+        """GET /classes/my-posts → `{ classes: [...], pagination }` của người đăng."""
+        data = await self._get_data_auth("classes/my-posts", token)
+        return data if isinstance(data, dict) else None
+
+    async def get_my_applications(self, token: str) -> dict | None:
+        """GET /classes/mine → `{ applications, counts, pagination }` (gia sư)."""
+        data = await self._get_data_auth("classes/mine", token)
+        return data if isinstance(data, dict) else None
+
+    async def get_my_invitations(self, token: str) -> dict | None:
+        """GET /classes/invitations → `{ invitations, pagination }` (gia sư)."""
+        data = await self._get_data_auth("classes/invitations", token)
+        return data if isinstance(data, dict) else None
+
     async def get_subjects(self) -> list[str] | None:
         """GET /subjects → danh sách tên môn đang bật."""
         data = await self._get_data("subjects")

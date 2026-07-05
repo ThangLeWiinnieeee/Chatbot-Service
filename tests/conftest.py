@@ -34,6 +34,31 @@ class FakeBackend:
     async def search_tutors(self, *, subject=None, name=None, limit=3):
         return {"tutors": [], "total": self._total}
 
+    # --- endpoint cá nhân (nhận token; giá trị canned cho test MineResolver) ---
+    async def get_my_profile(self, token):
+        return {
+            "fullName": "Nguyễn Văn A",
+            "email": "a@example.com",
+            "role": "user",
+            "phone": "0900000000",
+        }
+
+    async def get_my_posts(self, token):
+        return {
+            "classes": [{"subject": "Toán", "status": "open", "summary": "Lớp 10"}],
+            "pagination": {"totalItems": 1},
+        }
+
+    async def get_my_applications(self, token):
+        return {
+            "applications": [],
+            "counts": {"all": 2, "pending": 1, "approved": 1},
+            "pagination": {"totalItems": 2},
+        }
+
+    async def get_my_invitations(self, token):
+        return {"invitations": [], "pagination": {"totalItems": 0}}
+
 
 @pytest.fixture
 def data_dir():

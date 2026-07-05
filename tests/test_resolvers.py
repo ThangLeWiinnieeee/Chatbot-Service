@@ -8,6 +8,7 @@ from app.core.resolvers.data import DataResolver
 from app.core.resolvers.faq import FaqResolver
 from app.core.resolvers.greeting import GreetingResolver
 from app.core.resolvers.keyword import KeywordResolver
+from app.core.resolvers.mine import MineResolver
 from app.core.types import ChatContext, Message
 
 from .conftest import FakeBackend
@@ -116,6 +117,78 @@ async def test_data_ignores_non_data_tutor_question():
     resolver = DataResolver(backend=FakeBackend(total=7))
     # Không có từ đếm và không nêu môn → không phải câu số liệu.
     assert await resolver.resolve("gia sư có kinh nghiệm không", CTX) is None
+
+
+# --- mine (dữ liệu cá nhân) ---
+
+_AUTHED = ChatContext(auth_token="jwt-abc", user={"role": "user"})
+_AUTHED_TUTOR = ChatContext(auth_token="jwt-xyz", user={"role": "tutor"})
+
+
+async def test_mine_returns_none_without_backend():
+    assert await MineResolver(backend=None).resolve("hồ sơ của tôi", _AUTHED) is None
+
+
+async def test_mine_ignores_non_personal_query():
+    # "tôi muốn tìm gia sư" có "tôi" nhưng không phải câu dữ liệu cá nhân.
+    resolver = MineResolver(backend=FakeBackend())
+    assert await resolver.resolve("tôi muốn tìm gia sư môn Toán", _AUTHED) is None
+
+
+async def test_mine_requires_login():
+    resolver = MineResolver(backend=FakeBackend())
+    res = await resolver.resolve("hồ sơ của tôi", ChatContext())  # chưa đăng nhập
+    assert res is not None
+    assert res.intent == "auth_required"
+    assert res.cacheable is False
+    assert "đăng nhập" in res.answer.lower()
+
+
+async def test_mine_profile():
+    resolver = MineResolver(backend=FakeBackend())
+    res = await resolver.resolve("cho tôi xem hồ sơ của tôi", _AUTHED)
+    assert res is not None
+    assert res.source == "mine"
+    assert res.intent == "profile"
+    assert res.cacheable is False
+    assert "Nguyễn Văn A" in res.answer
+    assert "a@example.com" in res.answer
+
+
+async def test_mine_posts():
+    resolver = MineResolver(backend=FakeBackend())
+    res = await resolver.resolve("bài đăng của tôi có những gì", _AUTHED)
+    assert res is not None
+    assert res.intent == "posts"
+    assert "1 bài đăng" in res.answer
+    assert "Toán" in res.answer
+
+
+async def test_mine_applications_for_tutor():
+    resolver = MineResolver(backend=FakeBackend())
+    res = await resolver.resolve("đơn ứng tuyển của tôi thế nào", _AUTHED_TUTOR)
+    assert res is not None
+    assert res.intent == "applications"
+    assert "2 lớp" in res.answer
+
+
+async def test_mine_blocks_tutor_only_intent_for_student():
+    resolver = MineResolver(backend=FakeBackend())
+    res = await resolver.resolve("lời mời dạy của tôi", _AUTHED)  # role=user
+    assert res is not None
+    assert res.intent == "invitations"
+    assert "gia sư" in res.answer.lower()
+
+
+async def test_mine_graceful_on_backend_error():
+    class Broken(FakeBackend):
+        async def get_my_profile(self, token):
+            return None
+
+    res = await MineResolver(backend=Broken()).resolve("hồ sơ của tôi", _AUTHED)
+    assert res is not None
+    assert res.intent == "profile"
+    assert "thử lại" in res.answer.lower()
 
 
 # --- engine: cache AI theo ngữ cảnh ---

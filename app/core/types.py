@@ -12,6 +12,7 @@ class Source(StrEnum):
     KEYWORD = "keyword"
     FAQ = "faq"
     DATA = "data"
+    MINE = "mine"
     AI = "ai"
     FALLBACK = "fallback"
 
@@ -32,6 +33,9 @@ class ChatContext:
     user: dict | None = None
     session_id: str | None = None
     locale: str = "vi"
+    # JWT của người dùng (Bearer) — forward xuống BE để trả lời câu hỏi cá nhân
+    # ("bài đăng của tôi", "hồ sơ của tôi"). None = khách chưa đăng nhập.
+    auth_token: str | None = None
 
 
 @dataclass
