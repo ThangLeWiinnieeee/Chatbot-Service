@@ -25,7 +25,7 @@ _SUBJECTS_TTL = 300.0  # cache danh sách môn 5 phút để đỡ gọi BE mỗ
 class DataResolver(Resolver):
     name = "data"
 
-    def __init__(self, backend, settings=None) -> None:
+    def __init__(self, backend) -> None:
         self._backend = backend
         self._subjects_cache: list[str] | None = None
         self._subjects_at = 0.0

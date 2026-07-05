@@ -2,10 +2,10 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from enum import Enum
+from enum import StrEnum
 
 
-class Source(str, Enum):
+class Source(StrEnum):
     """Nguồn tạo ra câu trả lời."""
 
     GREETING = "greeting"
@@ -13,7 +13,6 @@ class Source(str, Enum):
     FAQ = "faq"
     DATA = "data"
     AI = "ai"
-    CACHE = "cache"
     FALLBACK = "fallback"
 
 

@@ -42,9 +42,7 @@ def build_engine(settings: Settings) -> tuple[ChatEngine, BackendClient]:
         secret=settings.internal_secret,
         timeout=settings.request_timeout,
     )
-    resolvers, faq_resolver = build_resolvers(
-        settings.data_dir, backend=backend, settings=settings
-    )
+    resolvers, faq_resolver = build_resolvers(settings.data_dir, backend=backend)
     engine = ChatEngine(
         resolvers=resolvers,
         faq_resolver=faq_resolver,

@@ -22,7 +22,6 @@ def build_resolvers(
     data_dir: Path,
     *,
     backend=None,
-    settings=None,
 ) -> tuple[list[Resolver], FaqResolver]:
     """Trả về (danh sách resolver theo thứ tự, faq_resolver để engine dùng cho RAG).
 
@@ -36,7 +35,7 @@ def build_resolvers(
     faq_resolver = FaqResolver(faqs)
     resolvers: list[Resolver] = [
         GreetingResolver(intents),
-        DataResolver(backend, settings),
+        DataResolver(backend),
         KeywordResolver(intents),
         faq_resolver,
     ]

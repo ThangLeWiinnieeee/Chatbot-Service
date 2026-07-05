@@ -22,6 +22,7 @@ dependencies = [
 dev = [
     "pytest>=8.0",
     "pytest-asyncio>=0.23",
+    "ruff>=0.6",
 ]
 
 [tool.hatch.build.targets.wheel]
@@ -35,3 +36,16 @@ addopts = "-q"
 [tool.ruff]
 line-length = 100
 target-version = "py311"
+
+[tool.ruff.lint]
+# E/W pycodestyle, F pyflakes, I isort, UP pyupgrade, B bugbear,
+# C4 comprehensions, SIM simplify, BLE blind-except.
+select = ["E", "W", "F", "I", "UP", "B", "C4", "SIM", "BLE"]
+
+[tool.ruff.lint.per-file-ignores]
+# Test được phép dùng import cục bộ trong hàm (fixtures lazy) và assert.
+"tests/*" = ["E402"]
+
+[tool.ruff.lint.flake8-bugbear]
+# Depends/Header/Query trong default là pattern chuẩn của FastAPI (không phải bug).
+extend-immutable-calls = ["fastapi.Depends", "fastapi.Header", "fastapi.Query"]

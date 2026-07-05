@@ -22,7 +22,7 @@ STOPWORDS: frozenset[str] = frozenset(
         "nhe", "nha", "vay", "the", "nay", "do", "duoc", "hay", "hoac", "tai",
         "trong", "ra", "vao", "len", "xuong", "ve", "den", "tu", "boi", "nen",
         "rat", "qua", "lam", "bi", "se", "dang", "da", "roi", "con", "cung",
-        "gi", "sao", "dau", "khong", "bao", "nhieu", "nao", "may", "the",
+        "gi", "sao", "dau", "khong", "bao", "nhieu", "nao", "may",
     }
 )
 

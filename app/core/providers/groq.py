@@ -5,6 +5,7 @@ khi chưa cài `groq`.
 """
 from __future__ import annotations
 
+import contextlib
 import logging
 
 from .base import AIProvider, AIProviderError
@@ -56,7 +57,5 @@ class GroqProvider(AIProvider):
     async def aclose(self) -> None:
         close = getattr(self._client, "close", None)
         if close is not None:
-            try:
+            with contextlib.suppress(Exception):  # pragma: no cover - best effort
                 await close()
-            except Exception:  # pragma: no cover - best effort
-                pass

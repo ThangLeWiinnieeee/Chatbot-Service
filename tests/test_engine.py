@@ -42,7 +42,7 @@ async def test_rule_only_engine_degrades_gracefully(data_dir):
     from app.core.engine import ChatEngine
     from app.core.resolvers.registry import build_resolvers
 
-    resolvers, faq = build_resolvers(data_dir, backend=None, settings=None)
+    resolvers, faq = build_resolvers(data_dir, backend=None)
     engine = ChatEngine(resolvers=resolvers, faq_resolver=faq, provider=None, threshold=0.6)
     res = await engine.answer("kể chuyện cười ngoài lề đi bạn ơi")
     assert res.source == "fallback"

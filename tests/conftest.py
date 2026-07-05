@@ -57,7 +57,7 @@ def fake_provider():
 
 @pytest.fixture
 def engine(data_dir, fake_provider):
-    resolvers, faq_resolver = build_resolvers(data_dir, backend=None, settings=None)
+    resolvers, faq_resolver = build_resolvers(data_dir, backend=None)
     return ChatEngine(
         resolvers=resolvers,
         faq_resolver=faq_resolver,
