@@ -37,6 +37,28 @@ async def test_empty_message_returns_prompt(engine, fake_provider):
     assert fake_provider.calls == []
 
 
+async def test_flywheel_writes_miss_to_jsonl(data_dir, fake_provider, tmp_path):
+    """Câu rớt rule → AI fallback ghi 1 dòng JSONL vào flywheel log."""
+    import json
+
+    from app.core.engine import ChatEngine
+    from app.core.resolvers.registry import build_resolvers
+
+    log_path = tmp_path / "sub" / "flywheel.jsonl"  # parent chưa tồn tại → phải tự tạo
+    resolvers, faq = build_resolvers(data_dir, backend=None)
+    engine = ChatEngine(
+        resolvers=resolvers, faq_resolver=faq, provider=fake_provider, miss_log_path=log_path
+    )
+
+    await engine.answer("kể cho tôi nghe một câu chuyện cười đi")
+
+    lines = log_path.read_text(encoding="utf-8").splitlines()
+    assert len(lines) == 1
+    rec = json.loads(lines[0])
+    assert rec["reason"] == "ai_used"
+    assert "chuyện cười" in rec["query"]
+
+
 async def test_rule_only_engine_degrades_gracefully(data_dir):
     """Không có AI provider: câu lạ trả về câu xin lỗi thay vì lỗi."""
     from app.core.engine import ChatEngine

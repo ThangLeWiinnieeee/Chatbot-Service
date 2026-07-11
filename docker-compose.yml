@@ -8,7 +8,7 @@ services:
       - "${PORT:-8001}:8001"
     environment:
       # Trong mạng docker, BE thường ở host khác — override tại đây nếu cần.
-      # BACKEND_BASE_URL: http://host.docker.internal:5002/api
+      BACKEND_BASE_URL: http://host.docker.internal:5002/api
       HOST: 0.0.0.0
       PORT: 8001
     restart: unless-stopped

@@ -27,7 +27,16 @@ async def lifespan(app: FastAPI):
     app.state.engine = engine
     app.state.backend = backend
     app.state.ai_enabled = settings.ai_enabled
-    logging.getLogger(__name__).info(
+    log = logging.getLogger(__name__)
+    if not settings.internal_secret:
+        # Không có secret → verify_secret bỏ qua auth, mà app bind 0.0.0.0:8001.
+        # Cổng lộ ra ngoài = proxy Groq mở + gọi được BE. Đặt INTERNAL_SECRET ở production.
+        log.warning(
+            "INTERNAL_SECRET trống → endpoint /api/chat KHÔNG xác thực. "
+            "Đặt INTERNAL_SECRET (khớp CHATBOT_INTERNAL_SECRET ở BE) hoặc firewall cổng %s.",
+            settings.port,
+        )
+    log.info(
         "Chatbot sẵn sàng (ai=%s, model=%s, backend=%s)",
         settings.ai_enabled,
         settings.ai_model,

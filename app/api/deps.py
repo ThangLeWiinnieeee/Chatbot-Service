@@ -50,6 +50,7 @@ def build_engine(settings: Settings) -> tuple[ChatEngine, BackendClient]:
         threshold=settings.rule_confidence_threshold,
         faq_context_k=settings.faq_context_k,
         cache=TTLCache(ttl_seconds=settings.cache_ttl_seconds, max_size=settings.cache_max_size),
+        miss_log_path=settings.flywheel_log or None,
     )
     return engine, backend
 

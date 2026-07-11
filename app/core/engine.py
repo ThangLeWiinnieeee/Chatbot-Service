@@ -2,7 +2,10 @@
 from __future__ import annotations
 
 import dataclasses
+import json
 import logging
+from datetime import datetime, timezone
+from pathlib import Path
 
 from .cache import TTLCache
 from .normalizer import normalize
@@ -34,6 +37,7 @@ class ChatEngine:
         threshold: float = 0.6,
         faq_context_k: int = 3,
         cache: TTLCache | None = None,
+        miss_log_path: str | Path | None = None,
     ) -> None:
         self._resolvers = resolvers
         self._faq = faq_resolver
@@ -41,6 +45,7 @@ class ChatEngine:
         self._threshold = threshold
         self._faq_k = faq_context_k
         self._cache: TTLCache[Resolution] = cache or TTLCache()
+        self._miss_path = Path(miss_log_path) if miss_log_path else None
 
     async def answer(self, query: str, ctx: ChatContext | None = None) -> Resolution:
         ctx = ctx or ChatContext()
@@ -113,16 +118,34 @@ class ChatEngine:
             )
         return Resolution(_FALLBACK_MSG, 0.0, Source.FALLBACK.value, intent="fallback")
 
-    @staticmethod
-    def _log_miss(query: str, candidate: Resolution | None, *, reason: str) -> None:
-        """Flywheel: ghi lại câu rớt rule để sau này biến thành rule mới (0 token)."""
+    def _log_miss(self, query: str, candidate: Resolution | None, *, reason: str) -> None:
+        """Flywheel: ghi lại câu rớt rule để sau này biến thành rule mới (0 token).
+
+        Vừa log (chẩn đoán) vừa append JSONL (khai thác lại): mỗi câu rớt = 1 dòng
+        để sau lọc/gom thành intent/FAQ mới.
+        """
+        conf = candidate.confidence if candidate else 0.0
+        intent = candidate.intent if candidate else None
         logger.info(
-            "chatbot.miss reason=%s best=%.3f intent=%s query=%r",
-            reason,
-            candidate.confidence if candidate else 0.0,
-            candidate.intent if candidate else None,
-            query,
+            "chatbot.miss reason=%s best=%.3f intent=%s query=%r", reason, conf, intent, query
         )
+        if self._miss_path is None:
+            return
+        record = {
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "reason": reason,
+            "confidence": round(conf, 3),
+            "intent": intent,
+            "query": query,
+        }
+        try:
+            self._miss_path.parent.mkdir(parents=True, exist_ok=True)
+            # ponytail: append đồng bộ, 1 dòng/câu — đủ cho single-process.
+            # Ghi lỗi không được làm sập chat → nuốt mọi exception.
+            with self._miss_path.open("a", encoding="utf-8") as fh:
+                fh.write(json.dumps(record, ensure_ascii=False) + "\n")
+        except Exception:  # noqa: BLE001 - flywheel là phụ, không chặn câu trả lời
+            logger.warning("Không ghi được flywheel log vào %s", self._miss_path)
 
     async def aclose(self) -> None:
         if self._provider is not None:

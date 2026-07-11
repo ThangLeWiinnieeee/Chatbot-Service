@@ -96,9 +96,11 @@ def engine(data_dir, fake_provider):
 def client(engine):
     from fastapi.testclient import TestClient
 
-    from app.api.deps import get_engine
+    from app.api.deps import get_engine, verify_secret
     from app.main import create_app
 
     app = create_app()
     app.dependency_overrides[get_engine] = lambda: engine
+    # Bỏ qua internal-secret trong test: không phụ thuộc .env của máy chạy.
+    app.dependency_overrides[verify_secret] = lambda: None
     return TestClient(app)

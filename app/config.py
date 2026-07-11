@@ -33,6 +33,8 @@ class Settings(BaseSettings):
     faq_context_k: int = 3
     cache_ttl_seconds: int = 3600
     cache_max_size: int = 512
+    # Flywheel: file JSONL ghi câu rớt rule để sau biến thành rule mới. "" = tắt.
+    flywheel_log: str = "logs/flywheel.jsonl"
 
     # --- Backend WebTutorCenter ---
     backend_base_url: str = "http://localhost:5002/api"
